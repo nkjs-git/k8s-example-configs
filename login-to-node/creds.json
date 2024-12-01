@@ -1,0 +1,4 @@
+{
+    "username": "azureuser", 
+    "ssh_key": "$(cat C:\\Users\\z004sukk\\.ssh\\id_rsa.pub)"
+}

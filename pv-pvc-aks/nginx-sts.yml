@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx-sts
+spec:
+  selector:
+    matchLabels:
+      app: nginx-sts
+  replicas: 2
+  serviceName: nginx-sts-server
+  template:
+    metadata:
+      labels:
+        app: nginx-sts
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          name: nginx
+        volumeMounts:
+        - mountPath: /data
+          name: nginx-sts-vol
+      restartPolicy: Always
+  volumeClaimTemplates:
+  - metadata:
+      name: nginx-sts-vol
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 8Gi
+      storageClassName: managed-csi
